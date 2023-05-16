@@ -20,7 +20,7 @@ RUN groupadd --gid ${PGID} dev && \
     --gid dev \
     dev
 
-# Install Neovim Git
+# Install Git
 RUN set -xe; \
   apt-get update -y && \
   apt-get install -y \
@@ -107,7 +107,7 @@ RUN set -xe; \
   chsh -s $(which zsh) && \
   sh -c "$(curl -fsSL https://starship.rs/install.sh)" -y -f
 
-ARG GO_VERSION=1.20.1
+ARG GO_VERSION=1.20.4
 ENV GO_VERSION=${GO_VERSION}
 
 # Install Golang
@@ -123,10 +123,11 @@ ENV ZSH_CUSTOM=${HOME}/.oh-my-zsh/custom
 ENV LANG=C.UTF-8 \
   LC_ALL=C.UTF-8
 
+# Install Neovim
 RUN set -xe; \
-  curl -OL https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb && \
-  apt install ./nvim-linux64.deb && \
-  rm ./nvim-linux64.deb
+  curl -OL https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage && \
+  chmod ugo+x nvim.appimage && \
+  mv nvim.appimage /usr/local/bin
 
 USER dev
 
