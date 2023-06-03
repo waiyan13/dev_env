@@ -82,6 +82,7 @@ call dein#add('vim-airline/vim-airline-themes')
 
 " Colorschemes
 call dein#add('ayu-theme/ayu-vim')
+call dein#add('benbusby/vim-earthbound-themes')
 call dein#add('catppuccin/nvim')
 call dein#add('cocopon/iceberg.vim')
 call dein#add('eihigh/vim-aomi-grayscale')
@@ -93,6 +94,7 @@ call dein#add('nanotech/jellybeans.vim')
 call dein#add('rebelot/kanagawa.nvim')
 call dein#add('robertmeta/nofrils')
 call dein#add('sainnhe/edge')
+call dein#add('yasukotelin/shirotelin')
 
 " Required:
 call dein#end()
