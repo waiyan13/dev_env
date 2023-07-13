@@ -148,12 +148,9 @@ COPY nvim ${HOME}/.config/nvim/
 COPY lua ${HOME}/.config/nvim/lua
 COPY starship.toml ${HOME}/.config
 
-ARG PROJECT_NAME=app
-ENV PROJECT_NAME=${PROJECT_NAME}
-
 # Powerline fonts
 RUN mkdir -p \
-  ${HOME}/${PROJECT_NAME} \
+  ${HOME}/projects \
   ${HOME}/.local/share/fonts \
   ${HOME}/.config/fontconfig/conf.d && \
   curl -O https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf && \
@@ -175,4 +172,4 @@ RUN chown -R ${PUID}:${PUID} ${HOME}/.config/nvim ${HOME}/.zshrc
 
 USER dev
 
-WORKDIR ${HOME}/${PROJECT_NAME}
+WORKDIR ${HOME}/projects

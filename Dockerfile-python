@@ -139,7 +139,7 @@ COPY starship.toml ${HOME}/.config
 
 # Powerline fonts
 RUN mkdir -p \
-  ${HOME}/app \
+  ${HOME}/projects \
   ${HOME}/.local/share/fonts \
   ${HOME}/.config/fontconfig/conf.d && \
   curl -O https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf && \
@@ -158,4 +158,4 @@ RUN chown -R ${PUID}:${PUID} ${HOME}/.config/nvim
 
 USER dev
 
-WORKDIR ${HOME}/app
+WORKDIR ${HOME}/projects
