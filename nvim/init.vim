@@ -72,6 +72,7 @@ call dein#add('jubnzv/virtual-types.nvim')
 call dein#add('MaxMEllon/vim-jsx-pretty')
 call dein#add('pangloss/vim-javascript')
 call dein#add('plasticboy/vim-markdown')
+call dein#add('simrat39/rust-tools.nvim')
 call dein#add('typescript-language-server/typescript-language-server')
 
 " Micellaneous
@@ -149,6 +150,9 @@ autocmd FileType python,php setlocal shiftwidth=4 tabstop=4 expandtab
 
 " Indent blank line
 lua require('indent-blankline')
+
+" Rustfmt
+let g:rustfmt_autosave=1
 
 " LSP config
 lua require('lsp-config')

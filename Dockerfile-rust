@@ -1,3 +1,4 @@
+ARG RUST_VERSION=1.69
 FROM debian:11-slim AS installer
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -62,26 +63,30 @@ RUN set -xe; \
     typescript-language-server \
     vscode-langservers-extracted
 
-FROM debian:11-slim
+FROM rust:${RUST_VERSION}-bullseye
 
 ENV DEBIAN_FRONTEND noninteractive
 
 USER root
- 
-# Create non-root user
+
+ARG TZ=UTC
+ENV TZ=${TZ}
+
+RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
+
+# Add rust user
 ARG PUID=1000
 ENV PUID=${PUID}
 ARG PGID=1000
 ENV PGID=${PGID}
 
-# Create user
-RUN groupadd --gid ${PGID} dev && \
+RUN set -xe; \
+  groupadd --gid ${PGID} dev && \
   useradd \
-    --create-home \
-    --home /home/dev \
-    --shell /bin/bash \
     --uid ${PUID} \
-    --gid dev \
+    --gid ${PGID} \
+    --no-log-init \
+    --create-home \
     dev
 
 # Set timezone
@@ -142,6 +147,13 @@ RUN mkdir -p \
   curl -O https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf && \
   mv PowerlineSymbols.otf ${HOME}/.local/share/fonts/ && \
   mv 10-powerline-symbols.conf ${HOME}/.config/fontconfig/conf.d/
+
+# Install rust-analyzer
+RUN set -xe; \
+  mkdir -p ${HOME}/.local/bin && \
+  curl -L https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | \
+  gunzip -c - > ${HOME}/.local/bin/rust-analyzer && \
+  chmod +x ~/.local/bin/rust-analyzer
 
 USER root
 
