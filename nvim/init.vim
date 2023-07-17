@@ -72,6 +72,7 @@ call dein#add('jubnzv/virtual-types.nvim')
 call dein#add('MaxMEllon/vim-jsx-pretty')
 call dein#add('pangloss/vim-javascript')
 call dein#add('plasticboy/vim-markdown')
+call dein#add('psf/black', {"branch": "stable"})
 call dein#add('simrat39/rust-tools.nvim')
 call dein#add('typescript-language-server/typescript-language-server')
 
@@ -139,6 +140,11 @@ au BufRead,BufNewFile *.md setlocal textwidth=80
 
 " Python
 au BufRead,BufNewFile *.py setlocal textwidth=88
+" Format on save
+augroup black_on_save
+  autocmd!
+  autocmd BufWritePre *.py Black
+augroup end
 
 " Python/PHP tabwidth
 autocmd FileType python,php setlocal shiftwidth=4 tabstop=4 expandtab
