@@ -159,7 +159,8 @@ RUN mkdir -p \
   mv 10-powerline-symbols.conf ${HOME}/.config/fontconfig/conf.d/
 
 RUN set -xe; \
-  /usr/local/go/bin/go install golang.org/x/tools/gopls@latest
+  /usr/local/go/bin/go install golang.org/x/tools/gopls@latest && \
+  /usr/local/go/bin/go install golang.org/x/tools/cmd/goimports@latest
 
 USER root
 
