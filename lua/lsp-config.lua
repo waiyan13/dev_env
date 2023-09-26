@@ -96,8 +96,21 @@ nvim_lsp.eslint.setup{
     debounce_text_changes = 150,
   },
   settings = {
-    nodePath = '/home/dev/.nvm/versions/v18.14.0/bin'
+    nodePath = '/home/dev/.nvm/versions/v18.18.0/bin'
   }
+}
+
+nvim_lsp.tsserver.setup{
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
+
+nvim_lsp.cssls.setup{
+  capabilities = capabilities,
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
 }
 
 nvim_lsp.pyright.setup{
@@ -113,27 +126,7 @@ nvim_lsp.pyright.setup{
   }
 }
 
-nvim_lsp.tsserver.setup{
-  capabilities = capabilities,
-  on_attach = on_attach,
-}
-
-nvim_lsp.intelephense.setup{
-  capabilities = capabilities,
-  on_attach = on_attach,
-}
-
-nvim_lsp.psalm.setup{
-  capabilities = capabilities,
-  on_attach = on_attach,
-}
-
 nvim_lsp.gopls.setup{
-  capabilities = capabilities,
-  on_attach = on_attach,
-}
-
-nvim_lsp.perlpls.setup{
   capabilities = capabilities,
   on_attach = on_attach,
 }
