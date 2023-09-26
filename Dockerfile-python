@@ -51,7 +51,7 @@ ENV NVM_DIR=${HOME}/.nvm
 
 # Install nvm
 RUN set -xe; \
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash && \
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash && \
   . ${NVM_DIR}/nvm.sh && \
   nvm install ${INSTALL_VERSION} && \
   npm install -g \
@@ -135,7 +135,7 @@ COPY starship.toml ${HOME}/.config
 
 # Powerline fonts
 RUN mkdir -p \
-  ${HOME}/projects \
+  ${HOME}/Projects \
   ${HOME}/.local/share/fonts \
   ${HOME}/.config/fontconfig/conf.d && \
   curl -O https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf && \
@@ -154,4 +154,4 @@ RUN chown -R ${PUID}:${PUID} ${HOME}/.config/nvim
 
 USER dev
 
-WORKDIR ${HOME}/projects
+WORKDIR ${HOME}/Projects
