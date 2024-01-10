@@ -130,6 +130,8 @@ ARG PYTHON_REF_VERSION=3.10
 ENV PYTHON_VERSION=${PYTHON_VERSION}
 ENV PYTHON_REF_VERSION=${PYTHON_REF_VERSION}
 
+COPY --from=installer ${HOME}/.pyenv ${HOME}/.pyenv
+
 # Install Poetry & LSP
 RUN set -xe; \
   ${HOME}/.pyenv/bin/pyenv global ${PYTHON_VERSION} && \
@@ -146,8 +148,6 @@ RUN set -xe; \
 COPY --chown=${PUID}:${PGID} .zshrc ${HOME}/
 
 RUN mkdir -p ${HOME}/.nvm ${HOME}/.oh-my-zsh ${HOME}/.pyenv
-
-COPY --from=installer ${HOME}/.pyenv ${HOME}/.pyenv
 
 # Add pyenv to PATH
 RUN echo '\n\
