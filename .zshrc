@@ -109,6 +109,7 @@ fi
 alias cls="cat /dev/null > ~/.zsh_history && history -c && reset"
 alias :q="exit"
 alias nvim="/usr/local/bin/nvim.appimage --appimage-extract-and-run"
+alias lenv="export $(grep -v '^#' .env | xargs)"
 
 eval "$(starship init zsh)"
 
