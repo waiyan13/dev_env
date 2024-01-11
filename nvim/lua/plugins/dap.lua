@@ -67,6 +67,7 @@ return {
                 name = "",
                 module = "",
                 args = {},
+                pythonPath = "",
                 cwd = "",
             })
             --]]
