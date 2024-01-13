@@ -147,8 +147,6 @@ RUN set -xe; \
 
 COPY --chown=${PUID}:${PGID} .zshrc ${HOME}/
 
-RUN mkdir -p ${HOME}/.nvm ${HOME}/.oh-my-zsh ${HOME}/.pyenv
-
 # Add pyenv to PATH
 RUN echo '\n\
 export PYENV_ROOT="${HOME}/.pyenv" \n\
