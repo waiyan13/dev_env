@@ -1,5 +1,10 @@
 return {
     {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = true,
+    },
+    {
         "folke/trouble.nvim",
         cmd = { "TroubleToggle" },
         dependencies = { "nvim-tree/nvim-web-devicons" },
