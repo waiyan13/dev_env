@@ -52,6 +52,11 @@ return {
         end,
     },
     {
+        "numToStr/Comment.nvim",
+        lazy = false,
+        config = true,
+    },
+    {
         "nvim-lualine/lualine.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
         opts = function()
