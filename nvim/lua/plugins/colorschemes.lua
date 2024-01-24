@@ -1,19 +1,46 @@
 return {
-    {
-        "catppuccin/nvim",
-        lazy = true,
-        name = "catppuccin",
-    },
-    {
-        "ellisonleao/gruvbox.nvim",
-        lazy = true,
-    },
-    {
-        "folke/tokyonight.nvim",
-        lazy = true,
-    },
-    {
-        "Mofiqul/dracula.nvim",
-        lazy = false,
-    },
+	{
+		"bluz71/vim-moonfly-colors",
+		lazy = true,
+	},
+	{
+		"bluz71/vim-nightfly-colors",
+		lazy = true,
+	},
+	{
+		"catppuccin/nvim",
+		lazy = true,
+		name = "catppuccin",
+	},
+	{
+		"crispybaccoon/evergarden",
+		lazy = true,
+		opts = {
+			contrast_dark = "hard",
+		},
+	},
+	{
+		"ellisonleao/gruvbox.nvim",
+		lazy = true,
+	},
+	{
+		"folke/tokyonight.nvim",
+		lazy = true,
+	},
+	{
+		"Mofiqul/dracula.nvim",
+		lazy = true,
+	},
+	{
+		"marko-cerovac/material.nvim",
+		lazy = true,
+	},
+	{
+		"nyoom-engineering/oxocarbon.nvim",
+		lazy = false,
+	},
+	{
+		"savq/melange-nvim",
+		lazy = true,
+	},
 }
