@@ -37,7 +37,12 @@ return {
     },
     {
         "nyoom-engineering/oxocarbon.nvim",
+        lazy = true,
+    },
+    {
+        "rose-pine/neovim",
         lazy = false,
+        name = "rose-pine",
     },
     {
         "savq/melange-nvim",
