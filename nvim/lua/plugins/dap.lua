@@ -1,7 +1,7 @@
 return {
     {
         "mfussenegger/nvim-dap",
-        dependencies = { "rcarriga/nvim-dap-ui" },
+        dependencies = { "rcarriga/nvim-dap-ui", "nvim-neotest/nvim-nio" },
         event = { "BufReadPre" },
         keys = {
             { "<leader>dc", '<cmd>lua require("dap").continue()<cr>' },
@@ -69,6 +69,30 @@ return {
                 args = {},
                 cwd = "",
             })
+            --]]
+
+            --[[
+            dap.adapters["pwa-node"] = {
+                type = "server",
+                host = "0.0.0.0",
+                port = "${port}",
+                executable = {
+                    command = "node",
+                    args = {
+                        "/home/dev/Projects/js-debug/src/dapDebugServer.js", "${port}",
+                    },
+                },
+            }
+
+            dap.configurations.javascript = {
+                {
+                    type = "pwa-node",
+                    request = "launch",
+                    name = "Launch file",
+                    program = "${file}",
+                    cwd = "${workspaceFolder}",
+                },
+            }
             --]]
 
             dap.listeners.before.attach.dapui_config = function()
