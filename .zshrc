@@ -75,7 +75,6 @@ zstyle ':omz:update' frequency 7
 plugins=(
   common-aliases 
   git 
-  ripgrep 
   zsh-autosuggestions
 )
 
