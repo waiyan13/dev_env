@@ -13,7 +13,7 @@ return {
         cmd = { "NvimTreeToggle" },
         dependencies = { "nvim-tree/nvim-web-devicons" },
         keys = {
-            { "<C-n>", ":NvimTreeToggle<cr>", desc = "Toggle nvim-tree" },
+            { "<leader>n", ":NvimTreeToggle<cr>", desc = "Toggle nvim-tree" },
         },
         config = true,
     },
