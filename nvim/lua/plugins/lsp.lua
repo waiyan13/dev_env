@@ -68,7 +68,7 @@ return {
                 on_attach = on_attach,
             })
 
-            lsp.tsserver.setup({
+            lsp.ts_ls.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
             })
@@ -86,7 +86,7 @@ return {
                 on_attach = on_attach,
             })
             --]]
-            
+
             --[[
             lsp.intelephense.setup({
                 capabilities = capabilities,
@@ -131,7 +131,7 @@ return {
 
                 -- window bottom
                 if winheight - winline < pumheight then
-                    return -pumheight1
+                    return -pumheight
                 end
 
                 return 0
