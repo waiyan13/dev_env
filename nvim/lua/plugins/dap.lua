@@ -64,10 +64,10 @@ return {
             table.insert(dap.configurations.python, {
                 type = "python",
                 request = "launch",
-                name = "",
-                module = "",
-                args = {},
-                cwd = "",
+                name = "", -- name of debug mode
+                module = "", -- ASGI server
+                args = {}, -- server arguments
+                cwd = "$workspaceFolder",
             })
             --]]
 
