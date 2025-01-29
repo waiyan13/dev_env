@@ -43,7 +43,7 @@ RUN set -xe; \
   chsh -s $(which zsh) && \
   sh -c "$(curl -fsSL https://starship.rs/install.sh)" -y -f
 
-ARG GO_VERSION=1.22.5
+ARG GO_VERSION=1.23.4
 ENV GO_VERSION=${GO_VERSION}
 
 # Install Golang
