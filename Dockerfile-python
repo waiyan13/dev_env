@@ -1,76 +1,10 @@
-FROM debian:11-slim AS installer
+ARG PYTHON_VERSION=3.12
+FROM python:${PYTHON_VERSION}-bookworm
 
 ENV DEBIAN_FRONTEND noninteractive
 
 USER root
 
-# Install Python build dependencies
-RUN set -xe; \
-  apt-get update -y && \
-  apt-get install -y \
-    build-essential \
-    curl \
-    git \
-    libbz2-dev \
-    libgdbm-dev \
-    libffi-dev \
-    liblzma-dev \
-    libncursesw5-dev \
-    libnss3-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    libssl-dev \
-    libxmlsec1-dev \
-    libxml2-dev \
-    llvm \
-    make \
-    tk-dev \
-    wget \
-    xz-utils \
-    zlib1g-dev
-
-# Set system environment variables
-ENV LANG=C.UTF-8 \
-  LC_ALL=C.UTF-8
-
-# Create non-root user
-ARG PUID=1000
-ENV PUID=${PUID}
-ARG PGID=1000
-ENV PGID=${PGID}
-
-# Create user
-RUN groupadd --gid ${PGID} dev && \
-  useradd \
-    --create-home \
-    --home /home/dev \
-    --shell /bin/bash \
-    --uid ${PUID} \
-    --gid dev \
-    dev
-
-USER dev
-
-ENV HOME=/home/dev
-
-WORKDIR ${HOME}
-
-# Install pyenv
-RUN set -xe; \
-  curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-
-ARG PYTHON_VERSION=3.11.9
-ENV PYTHON_VERSION=${PYTHON_VERSION}
-
-RUN set -xe; \
-  ${HOME}/.pyenv/bin/pyenv install ${PYTHON_VERSION}
-
-FROM debian:11-slim
-
-ENV DEBIAN_FRONTEND noninteractive
-
-USER root
- 
 # Create non-root user
 ARG PUID=1000
 ENV PUID=${PUID}
@@ -97,7 +31,7 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezo
 RUN set -xe; \
   apt-get update -y && \
   apt-get install -y \
-    build-essential \
+    ca-certificates \
     curl \
     git \
     libsqlite3-dev \
@@ -126,7 +60,7 @@ ENV LANG=C.UTF-8 \
 
 # Install Neovim
 RUN set -xe; \
-  curl -OL https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage && \
+  curl -L https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-arm64.appimage -o nvim.appimage && \
   chmod ugo+x nvim.appimage && \
   mv nvim.appimage /usr/local/bin
 
@@ -135,23 +69,9 @@ USER dev
 ENV HOME=/home/dev
 ENV NVM_DIR=${HOME}/.nvm
 ENV ZSH_CUSTOM=${HOME}/.oh-my-zsh/custom
+ENV PATH="/home/dev/.local/bin/:$PATH"
 
 WORKDIR ${HOME}
-
-ARG PYTHON_VERSION=3.11.9
-ARG PYTHON_REF_VERSION=3.11
-ENV PYTHON_VERSION=${PYTHON_VERSION}
-ENV PYTHON_REF_VERSION=${PYTHON_REF_VERSION}
-
-COPY --chown=${PUID}:${PGID} --from=installer ${HOME}/.pyenv ${HOME}/.pyenv
-
-# Install Poetry & LSP
-RUN set -xe; \
-  ${HOME}/.pyenv/bin/pyenv global ${PYTHON_VERSION} && \
-  ${HOME}/.pyenv/bin/pyenv exec pip install --upgrade --user pip && \
-  ${HOME}/.pyenv/bin/pyenv exec pip install --user pyright debugpy && \
-  curl -sSL https://install.python-poetry.org | ${HOME}/.pyenv/shims/python${PYTHON_REF_VERSION} - && \
-  ${HOME}/.local/bin/poetry config virtualenvs.in-project true
 
 # Setup zsh
 RUN set -xe; \
@@ -159,14 +79,6 @@ RUN set -xe; \
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
 
 COPY --chown=${PUID}:${PGID} .zshrc ${HOME}/
-
-# Add pyenv to PATH
-RUN echo '\n\
-export PYENV_ROOT="${HOME}/.pyenv" \n\
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH" \n\
-eval "$(pyenv init -)" \n\
-' >> ${HOME}/.zshrc
-
 COPY --chown=${PUID}:${PGID} nvim ${HOME}/.config/nvim/
 COPY --chown=${PUID}:${PGID} starship.toml ${HOME}/.config
 
@@ -201,6 +113,15 @@ RUN set -xe; \
   curl -O https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf && \
   mv PowerlineSymbols.otf ${HOME}/.local/share/fonts/ && \
   mv 10-powerline-symbols.conf ${HOME}/.config/fontconfig/conf.d/
+
+ARG UV_VERSION=0.6.5
+ENV UV_VERSION=${UV_VERSION}
+
+WORKDIR /home/python
+
+# Install uv
+RUN set -xe; \
+  curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
 
 USER root
 
