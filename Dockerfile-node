@@ -1,4 +1,4 @@
-FROM debian:11-slim
+FROM debian:12-slim
 
 USER root
 
@@ -42,7 +42,7 @@ RUN set -xe; \
 
 # Install Neovim
 RUN set -xe; \
-  curl -OL https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage && \
+  curl -L https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage -o nvim.appimage && \
   chmod ugo+x nvim.appimage && \
   mv nvim.appimage /usr/local/bin
 
@@ -86,7 +86,8 @@ RUN set -xe; \
     npm@latest \
     typescript \
     typescript-language-server \
-    vscode-langservers-extracted
+    vscode-langservers-extracted && \
+  curl -fsSL https://get.pnpm.io/install.sh | ENV="$HOME/.zshrc" SHELL="$(which zsh)" zsh -
 
 # Powerline fonts
 RUN set -xe; \
