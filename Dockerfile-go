@@ -55,9 +55,9 @@ RUN set -xe; \
 
 # Install Neovim
 RUN set -xe; \
-    curl -L https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage -o nvim.appimage && \
-    chmod ugo+x nvim.appimage && \
-    mv nvim.appimage /usr/local/bin
+    curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz && \
+    tar -xf nvim-linux-x86_64.tar.gz && \
+    mv nvim-linux-x86_64 /opt/nvim
 
 USER dev
 

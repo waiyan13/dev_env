@@ -107,7 +107,6 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias cls="cat /dev/null > ~/.zsh_history && history -c && reset"
 alias :q="exit"
-alias nvim="/usr/local/bin/nvim.appimage --appimage-extract-and-run"
 
 eval "$(starship init zsh)"
 
