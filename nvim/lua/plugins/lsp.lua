@@ -11,6 +11,10 @@ return {
         config = function()
             local lsp = require("lspconfig")
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            capabilities.textDocument.foldingRange = {
+                    dynamicRegistration = false,
+                    lineFoldingOnly = true,
+            }
 
             -- Use an on_attach function to only map the following keys
             -- after the language server attaches to the current buffer
@@ -39,6 +43,13 @@ return {
                     vim.lsp.buf.format({ async = true })
                 end, bufopts)
             end
+
+            --[[
+            lsp.jdtls.setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+            })
+            --]]
 
             --[[
             lsp.gopls.setup({
@@ -141,4 +152,10 @@ return {
             },
         },
     },
+    --[[
+    {
+        "nvim-java/nvim-java",
+        config = true,
+    },
+    --]]
 }
