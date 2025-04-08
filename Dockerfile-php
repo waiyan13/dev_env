@@ -1,6 +1,6 @@
 FROM debian:11-slim AS installer
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 USER root
 
