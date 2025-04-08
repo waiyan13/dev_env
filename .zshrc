@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$PATH:$HOME/.local/bin:/usr/local/bin
+export PATH=$PATH:$HOME/.local/bin:/usr/local/bin:/opt/nvim/bin
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
