@@ -45,6 +45,7 @@ return {
             end
 
             --[[
+            require("java").setup({})
             lsp.jdtls.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
@@ -155,7 +156,6 @@ return {
     --[[
     {
         "nvim-java/nvim-java",
-        config = true,
     },
     --]]
 }

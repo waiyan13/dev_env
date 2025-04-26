@@ -1,5 +1,57 @@
-ARG JDK_VERSION=21
-FROM eclipse-temurin:${JDK_VERSION}-jdk-noble
+FROM ubuntu:noble AS installer
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+USER root
+
+# Install Python build dependencies
+RUN set -xe; \
+  apt-get update -y && \
+  apt-get install -y \
+    build-essential \
+    curl \
+    git \
+    libbz2-dev \
+    libgdbm-dev \
+    libffi-dev \
+    liblzma-dev \
+    libncursesw5-dev \
+    libnss3-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libxmlsec1-dev \
+    libxml2-dev \
+    llvm \
+    make \
+    tk-dev \
+    wget \
+    xz-utils \
+    zlib1g-dev
+
+# Create non-root user
+ARG PUID=1000
+ENV PUID=${PUID}
+ARG PGID=1000
+ENV PGID=${PGID}
+
+USER ubuntu
+
+ENV HOME=/home/ubuntu
+
+WORKDIR ${HOME}
+
+# Install pyenv
+RUN set -xe; \
+  curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+
+ARG PYTHON_VERSION=3.12.9
+ENV PYTHON_VERSION=${PYTHON_VERSION}
+
+RUN set -xe; \
+  ${HOME}/.pyenv/bin/pyenv install ${PYTHON_VERSION}
+
+FROM eclipse-temurin:21-jdk-noble
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -45,6 +97,15 @@ ENV HOME=/home/ubuntu
 ENV ZSH_CUSTOM=${HOME}/.oh-my-zsh/custom
 
 WORKDIR ${HOME}
+
+COPY --from=installer ${HOME}/.pyenv ${HOME}/.pyenv
+
+# Add pyenv to PATH
+RUN set -xe; echo '\n\
+export PYENV_ROOT="${HOME}/.pyenv" \n\
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH" \n\
+eval "$(pyenv init -)" \n\
+' >> ${HOME}/.zshrc
 
 # Setup zsh
 RUN set -xe; \
