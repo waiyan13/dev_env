@@ -9,12 +9,36 @@ return {
         cmd = { "TroubleToggle" },
         dependencies = { "nvim-tree/nvim-web-devicons" },
         keys = {
-            { "<leader>xx", '<cmd>lua require("trouble").toggle()<cr>' },
-            { "<leader>xw", '<cmd>lua require("trouble").toggle("workspace_diagnostics")<cr>' },
-            { "<leader>xd", '<cmd>lua require("trouble").toggle("document_diagnostics")<cr>' },
-            { "<leader>xq", '<cmd>lua require("trouble").toggle("quickfix")<cr>' },
-            { "<leader>xl", '<cmd>lua require("trouble").toggle("loclist")<cr>' },
-            { "gR", '<cmd>lua require("trouble").toggle("lsp_references")<cr>' },
+            {
+                "<leader>xx",
+                "<cmd>Trouble diagnostics toggle<cr>",
+                desc = "Diagnostics (Trouble)",
+            },
+            {
+                "<leader>xX",
+                "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+                desc = "Buffer Diagnostics (Trouble)",
+            },
+            {
+                "<leader>cs",
+                "<cmd>Trouble symbols toggle focus=false<cr>",
+                desc = "Symbols (Trouble)",
+            },
+            {
+                "<leader>cl",
+                "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+                desc = "LSP Definitions / references / ... (Trouble)",
+            },
+            {
+                "<leader>xL",
+                "<cmd>Trouble loclist toggle<cr>",
+                desc = "Location List (Trouble)",
+            },
+            {
+                "<leader>xQ",
+                "<cmd>Trouble qflist toggle<cr>",
+                desc = "Quickfix List (Trouble)",
+            },
         },
         config = true,
     },
