@@ -98,7 +98,7 @@ ENV ZSH_CUSTOM=${HOME}/.oh-my-zsh/custom
 
 WORKDIR ${HOME}
 
-COPY --from=installer ${HOME}/.pyenv ${HOME}/.pyenv
+COPY --from=installer --chown=${PUID}:${PGID} ${HOME}/.pyenv ${HOME}/.pyenv
 
 # Add pyenv to PATH
 RUN set -xe; echo '\n\
@@ -123,7 +123,8 @@ RUN set -xe; \
     curl -O https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf && \
     curl -O https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf && \
     mv PowerlineSymbols.otf ${HOME}/.local/share/fonts/ && \
-    mv 10-powerline-symbols.conf ${HOME}/.config/fontconfig/conf.d/
+    mv 10-powerline-symbols.conf ${HOME}/.config/fontconfig/conf.d/ \
+    ${HOME}/.pyenv/bin/pyenv global 3.12.9
 
 # Neovim config files
 COPY --chown=${PUID}:${PGID} nvim ${HOME}/.config/nvim
