@@ -45,14 +45,6 @@ return {
             end
 
             --[[
-            require("java").setup({})
-            lsp.jdtls.setup({
-                capabilities = capabilities,
-                on_attach = on_attach,
-            })
-            --]]
-
-            --[[
             lsp.gopls.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
@@ -113,6 +105,49 @@ return {
     },
     --[[
     {
+        "mfussenegger/nvim-jdtls",
+        ft = { "java" },
+        config = function()
+            local jdtls = require("jdtls")
+            
+            -- Find root of project
+            local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
+            local root_dir = require("jdtls.setup").find_root(root_markers)
+            
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+            local home = "/home/ubuntu"
+            
+            local config = {
+                cmd = {
+                    "java",
+                    "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+                    "-Dosgi.bundles.defaultStartLevel=4",
+                    "-Declipse.product=org.eclipse.jdt.ls.core.product",
+                    "-Dlog.protocol=true",
+                    "-Dlog.level=ALL",
+                    "-Xms1g",
+                    "--add-modules=ALL-SYSTEM",
+                    "--add-opens", "java.base/java.util=ALL-UNNAMED",
+                    "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+
+                    "-javaagent:" .. home .. "/.local/share/nvim/mason/packages/lombok-nightly/lombok.jar",
+                    "-Xbootclasspath/a:" .. home .. "/.local/share/nvim/mason/packages/lombok-nightly/lombok.jar",
+
+                    "-jar", home .. "/jdtls/plugins/org.eclipse.equinox.launcher_1.7.0.v20250519-0528.jar",
+                    "-configuration", home .. "/jdtls/config_linux",
+                    "-data", home .. "/.cache/jdtls/jobonic"
+                },
+                root_dir = root_dir,
+                capabilities = capabilities,
+            }
+            
+            jdtls.start_or_attach(config)
+        end,
+    },
+    --]]
+    --[[
+    {
         "ray-x/go.nvim",
         dependencies = {
             "neovim/nvim-lspconfig",
@@ -153,9 +188,5 @@ return {
             },
         },
     },
-    --[[
-    {
-        "nvim-java/nvim-java",
-    },
-    --]]
 }
+
