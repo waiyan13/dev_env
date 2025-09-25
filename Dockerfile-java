@@ -45,7 +45,7 @@ WORKDIR ${HOME}
 RUN set -xe; \
   curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
 
-ARG PYTHON_VERSION=3.12.9
+ARG PYTHON_VERSION=3.12
 ENV PYTHON_VERSION=${PYTHON_VERSION}
 
 RUN set -xe; \
@@ -123,8 +123,7 @@ RUN set -xe; \
     curl -O https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf && \
     curl -O https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf && \
     mv PowerlineSymbols.otf ${HOME}/.local/share/fonts/ && \
-    mv 10-powerline-symbols.conf ${HOME}/.config/fontconfig/conf.d/ \
-    ${HOME}/.pyenv/bin/pyenv global 3.12.9
+    mv 10-powerline-symbols.conf ${HOME}/.config/fontconfig/conf.d/
 
 # Neovim config files
 COPY --chown=${PUID}:${PGID} nvim ${HOME}/.config/nvim
