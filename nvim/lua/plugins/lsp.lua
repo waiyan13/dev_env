@@ -136,7 +136,7 @@ return {
 
                     "-jar", home .. "/jdtls/plugins/org.eclipse.equinox.launcher_1.7.0.v20250519-0528.jar",
                     "-configuration", home .. "/jdtls/config_linux",
-                    "-data", home .. "/.cache/jdtls/jobonic"
+                    "-data", home .. "/.local/share/jdtls/workspace/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
                 },
                 root_dir = root_dir,
                 capabilities = capabilities,
