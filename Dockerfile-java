@@ -45,7 +45,7 @@ WORKDIR ${HOME}
 RUN set -xe; \
   curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
 
-ARG PYTHON_VERSION=3.12
+ARG PYTHON_VERSION=3.13
 ENV PYTHON_VERSION=${PYTHON_VERSION}
 
 RUN set -xe; \
@@ -129,15 +129,33 @@ RUN set -xe; \
 COPY --chown=${PUID}:${PGID} nvim ${HOME}/.config/nvim
 COPY --chown=${PUID}:${PGID} starship.toml ${HOME}/.config
 
+ARG JDTLS_VERSION=1.52.0-202510230337
+ENV JDTLS_VERSION=${JDTLS_VERSION}
+
+# Install eclipse.jdt.ls
+RUN set -xe; \
+  mkdir -p ${HOME}/.local/share/eclipse/jdtls ${HOME}/.local/share/jdtls/workspace && \
+  curl -LO https://projectlombok.org/downloads/lombok.jar && \
+  curl -L -o jdtls-${JDTLS_VERSION}.tar.gz \
+    https://www.eclipse.org/downloads/download.php?file=/jdtls/snapshots/jdt-language-server-${JDTLS_VERSION}.tar.gz && \
+  mv lombok.jar ${HOME}/.local/share && \
+  tar -xvzf jdtls-${JDTLS_VERSION}.tar.gz -C ${HOME}/.local/share/eclipse/jdtls && \
+  rm -f jdtls-${JDTLS_VERSION}.tar.gz
+
+ARG JAVA_DEBUG_VERSION=0.58.2
+ENV JAVA_DEBUG_VERSION=${JAVA_DEBUG_VERSION}
+
 USER root
 
 # Clean up
 RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    rm /var/log/lastlog /var/log/faillog
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+	rm /var/log/lastlog /var/log/faillog
 
 RUN chown -R ${PUID}:${PUID} ${HOME}/.config/nvim ${HOME}/.local
 
 USER ubuntu
 
 WORKDIR ${HOME}/Projects
+
+ENTRYPOINT ["/usr/bin/zsh"]

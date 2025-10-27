@@ -1,6 +1,7 @@
 return {
     {
         "neovim/nvim-lspconfig",
+        dependencies = { "mfussenegger/nvim-jdtls" },
         event = { "BufReadPre", "BufNewFile" },
         keys = {
             { "<space>e", "<cmd>lua vim.diagnostic.open_float()<cr>", silent = true },
@@ -43,6 +44,42 @@ return {
                     vim.lsp.buf.format({ async = true })
                 end, bufopts)
             end
+
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "java",
+                callback = function()
+                    -- jdtls
+                    local jdtls = require("jdtls")
+                    local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
+                    local root_dir = require("jdtls.setup").find_root(root_markers)
+                    local home = "/home/ubuntu"
+                    local jdtls_config = {
+                        cmd = {
+                            "java",
+                            "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+                            "-Dosgi.bundles.defaultStartLevel=4",
+                            "-Declipse.product=org.eclipse.jdt.ls.core.product",
+                            "-Dlog.protocol=true",
+                            "-Dlog.level=ALL",
+                            "-Xms1g",
+                            "--add-modules=ALL-SYSTEM",
+                            "--add-opens", "java.base/java.util=ALL-UNNAMED",
+                            "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+
+                            "-javaagent:" .. home .. "/.local/share/lombok.jar",
+                            "-Xbootclasspath/a:" .. home .. "/.local/share/lombok.jar",
+
+                            "-jar", home .. "/.local/share/eclipse/jdtls/plugins/org.eclipse.equinox.launcher_1.7.100.v20251014-1222.jar",
+                            "-configuration", home .. "/.local/share/eclipse/jdtls/config_linux",
+                            "-data", home .. "/.local/share/jdtls/workspace/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
+                        },
+                        root_dir = root_dir,
+                        capabilities = capabilities,
+                        on_attach = on_attach,
+                    }
+                    jdtls.start_or_attach(jdtls_config)
+                end,
+            })
 
             --[[
             lsp.gopls.setup({
@@ -103,49 +140,6 @@ return {
         "onsails/lspkind.nvim",
         event = { "InsertEnter" },
     },
-    --[[
-    {
-        "mfussenegger/nvim-jdtls",
-        ft = { "java" },
-        config = function()
-            local jdtls = require("jdtls")
-            
-            -- Find root of project
-            local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
-            local root_dir = require("jdtls.setup").find_root(root_markers)
-            
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-            local home = "/home/ubuntu"
-            
-            local config = {
-                cmd = {
-                    "java",
-                    "-Declipse.application=org.eclipse.jdt.ls.core.id1",
-                    "-Dosgi.bundles.defaultStartLevel=4",
-                    "-Declipse.product=org.eclipse.jdt.ls.core.product",
-                    "-Dlog.protocol=true",
-                    "-Dlog.level=ALL",
-                    "-Xms1g",
-                    "--add-modules=ALL-SYSTEM",
-                    "--add-opens", "java.base/java.util=ALL-UNNAMED",
-                    "--add-opens", "java.base/java.lang=ALL-UNNAMED",
-
-                    "-javaagent:" .. home .. "/.local/share/nvim/mason/packages/lombok-nightly/lombok.jar",
-                    "-Xbootclasspath/a:" .. home .. "/.local/share/nvim/mason/packages/lombok-nightly/lombok.jar",
-
-                    "-jar", home .. "/jdtls/plugins/org.eclipse.equinox.launcher_1.7.0.v20250519-0528.jar",
-                    "-configuration", home .. "/jdtls/config_linux",
-                    "-data", home .. "/.local/share/jdtls/workspace/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
-                },
-                root_dir = root_dir,
-                capabilities = capabilities,
-            }
-            
-            jdtls.start_or_attach(config)
-        end,
-    },
-    --]]
     --[[
     {
         "ray-x/go.nvim",
