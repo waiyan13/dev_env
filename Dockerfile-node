@@ -93,6 +93,7 @@ RUN set -xe; \
   mkdir -p \
     ${HOME}/Projects \
     ${HOME}/.local/share/fonts \
+    ${HOME}/.local/share/pnpm \
     ${HOME}/.config/fontconfig/conf.d && \
   curl -O https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf && \
   curl -O https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf && \
