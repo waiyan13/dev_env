@@ -1,21 +1,19 @@
 return {
     {
         "mfussenegger/nvim-dap",
-        dependencies = { "rcarriga/nvim-dap-ui", "nvim-neotest/nvim-nio" },
-        event = { "BufReadPre" },
+        dependencies = {"rcarriga/nvim-dap-ui", "nvim-neotest/nvim-nio"},
+        event = {"BufReadPre"},
         keys = {
-            { "<leader>dc", '<cmd>lua require("dap").continue()<cr>' },
-            { "<leader>dv", '<cmd>lua require("dap").step_over()<cr>' },
-            { "<leader>di", '<cmd>lua require("dap").step_into()<cr>' },
-            { "<leader>do", '<cmd>lua require("dap").step_out()<cr>' },
-            { "<leader>dt", '<cmd>lua require("dap").toggle_breakpoint()<cr>' },
-            { "<leader>db", '<cmd>lua require("dap").set_breakpoint()<cr>' },
-            {
+            {"<leader>dc", '<cmd>lua require("dap").continue()<cr>'},
+            {"<leader>dv", '<cmd>lua require("dap").step_over()<cr>'},
+            {"<leader>di", '<cmd>lua require("dap").step_into()<cr>'},
+            {"<leader>do", '<cmd>lua require("dap").step_out()<cr>'},
+            {"<leader>dt", '<cmd>lua require("dap").toggle_breakpoint()<cr>'},
+            {"<leader>db", '<cmd>lua require("dap").set_breakpoint()<cr>'}, {
                 "<leader>dl",
-                '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<cr>',
-            },
-            { "<leader>dp", '<cmd>lua require("dap").repl.open()<cr>' },
-            { "<leader>dr", '<cmd>lua require("dap").run_last()<cr>' },
+                '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<cr>'
+            }, {"<leader>dp", '<cmd>lua require("dap").repl.open()<cr>'},
+            {"<leader>dr", '<cmd>lua require("dap").run_last()<cr>'}
         },
         config = function()
             local dap = require("dap")
@@ -107,9 +105,8 @@ return {
             dap.listeners.before.event_exited.dapui_config = function()
                 dapui.close()
             end
-        end,
-    },
-    --[[
+        end
+    }, --[[
     {
         "mfussenegger/nvim-dap-python",
         lazy = true,
@@ -124,6 +121,5 @@ return {
             python.test_runner = "pytest"
         end
     },
-    --]]
-    { "rcarriga/nvim-dap-ui" },
+    --]] {"rcarriga/nvim-dap-ui"}
 }

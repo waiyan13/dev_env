@@ -1,88 +1,71 @@
 return {
     {
         "folke/todo-comments.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        config = true,
-    },
-    {
+        dependencies = {"nvim-lua/plenary.nvim"},
+        config = true
+    }, {
         "folke/trouble.nvim",
-        cmd = { "TroubleToggle" },
-        dependencies = { "nvim-tree/nvim-web-devicons" },
+        cmd = {"TroubleToggle"},
+        dependencies = {"nvim-tree/nvim-web-devicons"},
         keys = {
             {
                 "<leader>xx",
                 "<cmd>Trouble diagnostics toggle<cr>",
-                desc = "Diagnostics (Trouble)",
-            },
-            {
+                desc = "Diagnostics (Trouble)"
+            }, {
                 "<leader>xX",
                 "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-                desc = "Buffer Diagnostics (Trouble)",
-            },
-            {
+                desc = "Buffer Diagnostics (Trouble)"
+            }, {
                 "<leader>cs",
                 "<cmd>Trouble symbols toggle focus=false<cr>",
-                desc = "Symbols (Trouble)",
-            },
-            {
+                desc = "Symbols (Trouble)"
+            }, {
                 "<leader>cl",
                 "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-                desc = "LSP Definitions / references / ... (Trouble)",
-            },
-            {
+                desc = "LSP Definitions / references / ... (Trouble)"
+            }, {
                 "<leader>xL",
                 "<cmd>Trouble loclist toggle<cr>",
-                desc = "Location List (Trouble)",
-            },
-            {
+                desc = "Location List (Trouble)"
+            }, {
                 "<leader>xQ",
                 "<cmd>Trouble qflist toggle<cr>",
-                desc = "Quickfix List (Trouble)",
-            },
+                desc = "Quickfix List (Trouble)"
+            }
         },
-        config = true,
-    },
-    {
+        config = true
+    }, {
         "lukas-reineke/indent-blankline.nvim",
-        event = { "BufReadPre", "BufNewFile" },
+        event = {"BufReadPre", "BufNewFile"},
         opts = {
             indent = {
                 highlight = {
-                    "RainbowRed",
-                    "RainbowYellow",
-                    "RainbowBlue",
-                    "RainbowOrange",
-                    "RainbowGreen",
-                    "RainbowViolet",
-                    "RainbowCyan",
-                },
-            },
+                    "RainbowRed", "RainbowYellow", "RainbowBlue",
+                    "RainbowOrange", "RainbowGreen", "RainbowViolet",
+                    "RainbowCyan"
+                }
+            }
         },
         config = function(_, opts)
             local ibl = require("ibl")
             local hooks = require("ibl.hooks")
 
             hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-                vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-                vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-                vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-                vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-                vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-                vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-                vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+                vim.api.nvim_set_hl(0, "RainbowRed", {fg = "#E06C75"})
+                vim.api.nvim_set_hl(0, "RainbowYellow", {fg = "#E5C07B"})
+                vim.api.nvim_set_hl(0, "RainbowBlue", {fg = "#61AFEF"})
+                vim.api.nvim_set_hl(0, "RainbowOrange", {fg = "#D19A66"})
+                vim.api.nvim_set_hl(0, "RainbowGreen", {fg = "#98C379"})
+                vim.api.nvim_set_hl(0, "RainbowViolet", {fg = "#C678DD"})
+                vim.api.nvim_set_hl(0, "RainbowCyan", {fg = "#56B6C2"})
             end)
 
             ibl.setup(opts)
-        end,
-    },
-    {
-        "numToStr/Comment.nvim",
-        lazy = false,
-        config = true,
-    },
-    {
+        end
+    }, {"numToStr/Comment.nvim", lazy = false, config = true}, {
         "nvim-lualine/lualine.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
+        dependencies = {"nvim-tree/nvim-web-devicons", opt = true},
         opts = function()
             local colors = {
                 blue = "#80a0ff",
@@ -91,64 +74,65 @@ return {
                 white = "#c6c6c6",
                 red = "#ff5189",
                 violet = "#d183e8",
-                grey = "#303030",
+                grey = "#303030"
             }
 
             local bubbles_theme = {
                 normal = {
-                    a = { fg = colors.black, bg = colors.violet },
-                    b = { fg = colors.white, bg = colors.grey },
-                    c = { fg = colors.black, bg = colors.black },
+                    a = {fg = colors.black, bg = colors.violet},
+                    b = {fg = colors.white, bg = colors.grey},
+                    c = {fg = colors.black, bg = colors.black}
                 },
 
-                insert = { a = { fg = colors.black, bg = colors.blue } },
-                visual = { a = { fg = colors.black, bg = colors.cyan } },
-                replace = { a = { fg = colors.black, bg = colors.red } },
+                insert = {a = {fg = colors.black, bg = colors.blue}},
+                visual = {a = {fg = colors.black, bg = colors.cyan}},
+                replace = {a = {fg = colors.black, bg = colors.red}},
 
                 inactive = {
-                    a = { fg = colors.white, bg = colors.black },
-                    b = { fg = colors.white, bg = colors.black },
-                    c = { fg = colors.black, bg = colors.black },
-                },
+                    a = {fg = colors.white, bg = colors.black},
+                    b = {fg = colors.white, bg = colors.black},
+                    c = {fg = colors.black, bg = colors.black}
+                }
             }
 
             return {
                 options = {
                     theme = bubbles_theme,
                     component_separators = "|",
-                    section_separators = { left = "", right = "" },
+                    section_separators = {left = "", right = ""}
                 },
                 sections = {
                     lualine_a = {
-                        { "mode", separator = { left = "" }, right_padding = 2 },
+                        {"mode", separator = {left = ""}, right_padding = 2}
                     },
-                    lualine_b = { "branch", "filename", "diff", "diagnostics" },
+                    lualine_b = {"branch", "filename", "diff", "diagnostics"},
                     lualine_c = {},
                     lualine_x = {},
-                    lualine_y = { "encoding", "filetype", "progress" },
+                    lualine_y = {"encoding", "filetype", "progress"},
                     lualine_z = {
-                        { "location", separator = { right = "" }, left_padding = 2 },
-                    },
+                        {
+                            "location",
+                            separator = {right = ""},
+                            left_padding = 2
+                        }
+                    }
                 },
                 inactive_sections = {
-                    lualine_a = { "filename" },
+                    lualine_a = {"filename"},
                     lualine_b = {},
                     lualine_c = {},
                     lualine_x = {},
                     lualine_y = {},
-                    lualine_z = { "location" },
+                    lualine_z = {"location"}
                 },
                 tabline = {},
-                extensions = {},
+                extensions = {}
             }
         end,
-        config = function(_, opts)
-            require("lualine").setup(opts)
-        end,
-    },
-    {
+        config = function(_, opts) require("lualine").setup(opts) end
+    }, {
         "kevinhwang91/nvim-ufo",
-        dependencies = { "kevinhwang91/promise-async" },
+        dependencies = {"kevinhwang91/promise-async"},
         config = function()
             vim.o.foldcolumn = '1' -- '0' is not bad
             vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
@@ -158,6 +142,6 @@ return {
             -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
             vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
             vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-        end,
-    },
+        end
+    }
 }

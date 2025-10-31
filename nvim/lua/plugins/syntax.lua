@@ -1,10 +1,5 @@
 return {
-    {
-        "kylechui/nvim-surround",
-        version = "*",
-        event = "VeryLazy",
-        config = true,
-    },
+    {"kylechui/nvim-surround", version = "*", event = "VeryLazy", config = true},
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
@@ -12,10 +7,10 @@ return {
             local configs = require("nvim-treesitter.configs")
 
             configs.setup({
-                highlight = { enable = true },
-                indent = { enable = true },
-                sync_install = false,
+                highlight = {enable = true},
+                indent = {enable = true},
+                sync_install = false
             })
-        end,
-    },
+        end
+    }
 }

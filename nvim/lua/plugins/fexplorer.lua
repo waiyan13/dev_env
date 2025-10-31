@@ -1,20 +1,15 @@
 return {
     {
         "hedyhli/outline.nvim",
-        cmd = { "Outline", "OutlineOpen" },
-        keys = {
-            { "<leader>o", "<cmd>Outline<CR>", desc = "Outline tags" },
-        },
-        config = true,
-    },
-    {
+        cmd = {"Outline", "OutlineOpen"},
+        keys = {{"<leader>o", "<cmd>Outline<CR>", desc = "Outline tags"}},
+        config = true
+    }, {
         "nvim-tree/nvim-tree.lua",
         version = "*",
-        cmd = { "NvimTreeToggle" },
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        keys = {
-            { "<leader>n", ":NvimTreeToggle<cr>", desc = "Toggle nvim-tree" },
-        },
+        cmd = {"NvimTreeToggle"},
+        dependencies = {"nvim-tree/nvim-web-devicons"},
+        keys = {{"<leader>n", ":NvimTreeToggle<cr>", desc = "Toggle nvim-tree"}},
         opts = {
             --[[ for floating window
             view = {
@@ -46,20 +41,32 @@ return {
             },
             --]]
         },
-        config = function(_, opts)
-            require("nvim-tree").setup(opts)
-        end,
-    },
-    {
+        config = function(_, opts) require("nvim-tree").setup(opts) end
+    }, {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
-        dependencies = { "nvim-lua/plenary.nvim" },
+        dependencies = {"nvim-lua/plenary.nvim"},
         keys = {
-            { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Search for files" },
-            { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Search as you type" },
-            { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "List open buffers" },
-            { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "List available help tags" },
+            {
+                "<leader>ff",
+                "<cmd>Telescope find_files<cr>",
+                desc = "Search for files"
+            },
+            {
+                "<leader>fg",
+                "<cmd>Telescope live_grep<cr>",
+                desc = "Search as you type"
+            },
+            {
+                "<leader>fb",
+                "<cmd>Telescope buffers<cr>",
+                desc = "List open buffers"
+            }, {
+                "<leader>fh",
+                "<cmd>Telescope help_tags<cr>",
+                desc = "List available help tags"
+            }
         },
-        config = true,
-    },
+        config = true
+    }
 }

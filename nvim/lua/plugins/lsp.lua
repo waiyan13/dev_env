@@ -1,9 +1,5 @@
 return {
-    {
-        "onsails/lspkind.nvim",
-        event = { "InsertEnter" },
-    },
-    --[[
+    {"onsails/lspkind.nvim", event = {"InsertEnter"}}, --[[
     {
         "ray-x/go.nvim",
         dependencies = {
@@ -15,10 +11,9 @@ return {
         ft = { "go", "gomod" },
         build = ':lua require("go.install").update_all_sync()',
     },
-    --]]
-    {
+    --]] {
         "ray-x/lsp_signature.nvim",
-        event = { "BufReadPre", "BufNewFile" },
+        event = {"BufReadPre", "BufNewFile"},
         opts = {
             bind = true,
             floating_window_off_x = 5, -- adjust float windows x position.
@@ -29,9 +24,7 @@ return {
                 local winheight = vim.fn.winheight(0)
 
                 -- window top
-                if winline - 1 < pumheight then
-                    return pumheight
-                end
+                if winline - 1 < pumheight then return pumheight end
 
                 -- window bottom
                 if winheight - winline < pumheight then
@@ -40,10 +33,8 @@ return {
 
                 return 0
             end,
-            handler_opts = {
-                border = "rounded",
-            },
-        },
-    },
+            handler_opts = {border = "rounded"}
+        }
+    }
 }
 
