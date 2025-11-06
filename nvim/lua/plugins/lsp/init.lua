@@ -60,12 +60,12 @@ return {
             local opts = {capabilities = capabilities, on_attach = on_attach}
 
             local servers_dir = vim.fn.stdpath("config") ..
-                                    "lua/plugins/lsp/servers"
+                                    "/lua/plugins/lsp/servers"
             local servers = {}
             for _, file in ipairs(vim.fn.readdir(servers_dir,
                                                  [[v:val =~ '\.lua$']])) do
                 local server_name = file:gsub("%.lua$", "")
-                local ok, server = pcall(require, "plugins.lsp." .. server_name)
+                local ok, server = pcall(require, "plugins.lsp.servers." .. server_name)
 
                 if ok and type(server.setup) == "function" then
                     server.setup(opts)
