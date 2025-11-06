@@ -12,7 +12,7 @@ ENV PGID=${PGID}
 
 # Create user
 RUN groupadd --gid ${PGID} dev && \
-    useradd \
+	useradd \
     --create-home \
     --home /home/dev \
     --shell /bin/bash \
@@ -22,7 +22,7 @@ RUN groupadd --gid ${PGID} dev && \
 
 # Set system environment variables
 ENV LANG=C.UTF-8 \
-    LC_ALL=C.UTF-8
+	LC_ALL=C.UTF-8
 
 # Set timezone
 ARG TZ=UTC
@@ -32,32 +32,32 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezo
 
 # Install essentials
 RUN set -xe; \
-    apt-get update -y && \
-    apt-get install -y \
-    build-essential \
-    curl \
-    git \
-    ripgrep \
-    unzip \
-    zsh && \
-    chsh -s $(which zsh) && \
-    sh -c "$(curl -fsSL https://starship.rs/install.sh)" -y -f
+	apt-get update -y && \
+	apt-get install -y \
+		build-essential \
+		curl \
+		git \
+		ripgrep \
+		unzip \
+		zsh && \
+	chsh -s $(which zsh) && \
+	sh -c "$(curl -fsSL https://starship.rs/install.sh)" -y -f
 
-ARG GO_VERSION=1.23.4
+ARG GO_VERSION=1.25.4
 ENV GO_VERSION=${GO_VERSION}
 
 # Install Golang
 RUN set -xe; \
-    rm -rf /usr/local/go && \
-    curl -OL https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
-    rm go${GO_VERSION}.linux-amd64.tar.gz
+	rm -rf /usr/local/go && \
+	curl -OL https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
+	tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
+	rm go${GO_VERSION}.linux-amd64.tar.gz
 
 # Install Neovim
 RUN set -xe; \
-    curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz && \
-    tar -xf nvim-linux-x86_64.tar.gz && \
-    mv nvim-linux-x86_64 /opt/nvim
+	curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz && \
+	tar -xf nvim-linux-x86_64.tar.gz && \
+	mv nvim-linux-x86_64 /opt/nvim
 
 USER dev
 
@@ -67,27 +67,27 @@ ENV ZSH_CUSTOM=${HOME}/.oh-my-zsh/custom
 WORKDIR ${HOME}
 
 RUN set -xe; \
-    /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest && \
-    /usr/local/go/bin/go install golang.org/x/tools/gopls@latest && \
-    /usr/local/go/bin/go install golang.org/x/tools/cmd/goimports@latest
+	/usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest && \
+	/usr/local/go/bin/go install golang.org/x/tools/gopls@latest && \
+	/usr/local/go/bin/go install golang.org/x/tools/cmd/goimports@latest
 
 # Setup zsh
 RUN set -xe; \
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
+	git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
 
 COPY --chown=${PUID}:${PGID} .zshrc ${HOME}
 
 # Powerline fonts
 RUN set -xe; \
-    mkdir -p \
-    ${HOME}/Projects \
-    ${HOME}/.local/share/fonts \
-    ${HOME}/.config/fontconfig/conf.d && \
-    curl -O https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf && \
-    curl -O https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf && \
-    mv PowerlineSymbols.otf ${HOME}/.local/share/fonts/ && \
-    mv 10-powerline-symbols.conf ${HOME}/.config/fontconfig/conf.d/
+	mkdir -p \
+	${HOME}/Projects \
+	${HOME}/.local/share/fonts \
+	${HOME}/.config/fontconfig/conf.d && \
+	curl -O https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf && \
+	curl -O https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf && \
+	mv PowerlineSymbols.otf ${HOME}/.local/share/fonts/ && \
+	mv 10-powerline-symbols.conf ${HOME}/.config/fontconfig/conf.d/
 
 # Neovim config files
 COPY --chown=${PUID}:${PGID} nvim ${HOME}/.config/nvim
@@ -97,8 +97,8 @@ USER root
 
 # Clean up
 RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    rm /var/log/lastlog /var/log/faillog
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+	rm /var/log/lastlog /var/log/faillog
 
 RUN chown -R ${PUID}:${PUID} ${HOME}/.config/nvim ${HOME}/.local
 
