@@ -25,6 +25,12 @@ vim.opt.number = true
 vim.opt.termguicolors = true
 vim.wo.relativenumber = true
 
+vim.filetype.add({
+    pattern = {
+        ["Dockerfile-.*"] = "dockerfile",
+    },
+})
+
 --[[
 vim.api.nvim_create_augroup("AutoFormat", {})
 vim.api.nvim_create_autocmd(
