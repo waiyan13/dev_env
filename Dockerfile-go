@@ -43,7 +43,7 @@ RUN set -xe; \
 	chsh -s $(which zsh) && \
 	sh -c "$(curl -fsSL https://starship.rs/install.sh)" -y -f
 
-ARG GO_VERSION=1.25.4
+ARG GO_VERSION=1.26.1
 ENV GO_VERSION=${GO_VERSION}
 
 # Install Golang
@@ -56,8 +56,8 @@ RUN set -xe; \
 # Install Neovim
 RUN set -xe; \
 	curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz && \
-	tar -xf nvim-linux-x86_64.tar.gz && \
-	mv nvim-linux-x86_64 /opt/nvim
+	tar -C /opt -xzf nvim-linux-x86_64.tar.gz && \
+	rm nvim-linux-x86_64.tar.gz
 
 USER dev
 
@@ -81,9 +81,9 @@ COPY --chown=${PUID}:${PGID} .zshrc ${HOME}
 # Powerline fonts
 RUN set -xe; \
 	mkdir -p \
-	${HOME}/Projects \
-	${HOME}/.local/share/fonts \
-	${HOME}/.config/fontconfig/conf.d && \
+    ${HOME}/Projects \
+    ${HOME}/.local/share/fonts \
+    ${HOME}/.config/fontconfig/conf.d && \
 	curl -O https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf && \
 	curl -O https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf && \
 	mv PowerlineSymbols.otf ${HOME}/.local/share/fonts/ && \

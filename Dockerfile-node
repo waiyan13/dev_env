@@ -43,8 +43,8 @@ RUN set -xe; \
 # Install Neovim
 RUN set -xe; \
   curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz && \
-  tar -xf nvim-linux-x86_64.tar.gz && \
-  mv nvim-linux-x86_64 /opt/nvim
+  tar -C /opt -xzf nvim-linux-x86_64.tar.gz && \
+  rm nvim-linux-x86_64.tar.gz
 
 USER dev
 
@@ -67,7 +67,7 @@ COPY --chown=${PUID}:${PGID} starship.toml ${HOME}/.config
 
 # Install NVM
 RUN mkdir -p ${NVM_DIR} && \
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash && \
   . ${NVM_DIR}/nvm.sh
 
 RUN echo '\n\
@@ -85,15 +85,13 @@ RUN set -xe; \
   npm install -g \
     npm@latest \
     typescript \
-    typescript-language-server \
-    vscode-langservers-extracted
+    typescript-language-server
 
 # Powerline fonts
 RUN set -xe; \
   mkdir -p \
     ${HOME}/Projects \
     ${HOME}/.local/share/fonts \
-    ${HOME}/.local/share/pnpm \
     ${HOME}/.config/fontconfig/conf.d && \
   curl -O https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf && \
   curl -O https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf && \

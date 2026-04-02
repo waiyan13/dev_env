@@ -43,9 +43,9 @@ ENV LANG=C.UTF-8 \
 
 # Install Neovim
 RUN set -xe; \
-  curl -OL https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage && \
-  chmod ugo+x nvim.appimage && \
-  mv nvim.appimage /usr/local/bin
+	curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz && \
+	tar -C /opt -xzf nvim-linux-x86_64.tar.gz && \
+	rm nvim-linux-x86_64.tar.gz
 
 USER dev
 
@@ -66,10 +66,11 @@ COPY --chown=${PUID}:${PGID} nvim ${HOME}/.config/nvim
 COPY --chown=${PUID}:${PGID} starship.toml ${HOME}/.config
 
 # Powerline fonts
-RUN mkdir -p \
-  ${HOME}/projects \
-  ${HOME}/.local/share/fonts \
-  ${HOME}/.config/fontconfig/conf.d && \
+RUN set -xe; \
+  mkdir -p \
+    ${HOME}/projects \
+    ${HOME}/.local/share/fonts \
+    ${HOME}/.config/fontconfig/conf.d && \
   curl -O https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf && \
   curl -O https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf && \
   mv PowerlineSymbols.otf ${HOME}/.local/share/fonts/ && \
@@ -80,7 +81,7 @@ RUN set -xe; \
   mkdir -p ${HOME}/.local/bin && \
   curl -L https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | \
   gunzip -c - > ${HOME}/.local/bin/rust-analyzer && \
-  chmod +x ~/.local/bin/rust-analyzer
+  chmod +x ${HOME}/.local/bin/rust-analyzer
 
 USER root
 
