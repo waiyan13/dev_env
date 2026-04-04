@@ -52,7 +52,11 @@ return {
 						end
 					end, { "i", "s" }),
 				},
+				performance = {
+					fetching_timeout = 2000,
+				},
 				sources = cmp.config.sources({
+					{ name = "minuet" },
 					{ name = "luasnip" },
 					{ name = "nvim_lsp" },
 				}, { { name = "buffer" } }),
