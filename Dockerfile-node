@@ -35,7 +35,6 @@ RUN set -xe; \
     curl \
     git \
     ripgrep \
-    tmux \
     unzip \
     zsh && \
   chsh -s $(which zsh) && \
