@@ -32,7 +32,7 @@ vim.filetype.add({
 })
 
 --[[
-vim.api.nvim_create_augroup("AutoFormat", {})
+local format_sync_grp = vim.api.nvim_create_augroup("AutoFormat", {})
 vim.api.nvim_create_autocmd(
     "BufWritePre",
     {
