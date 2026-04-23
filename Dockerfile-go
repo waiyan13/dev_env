@@ -62,6 +62,7 @@ RUN set -xe; \
 USER dev
 
 ENV HOME=/home/dev
+ENV NVM_DIR=${HOME}/.nvm
 ENV ZSH_CUSTOM=${HOME}/.oh-my-zsh/custom
 
 WORKDIR ${HOME}
@@ -77,6 +78,28 @@ RUN set -xe; \
 	git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
 
 COPY --chown=${PUID}:${PGID} .zshrc ${HOME}
+
+# Install NVM
+RUN mkdir -p ${NVM_DIR} && \
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash && \
+  . ${NVM_DIR}/nvm.sh
+
+RUN echo '\n\
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" \n\
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \n\
+' >> ${HOME}/.zshrc
+
+ARG NODE_VERSION=node
+ENV NODE_VERSION=${NODE_VERSION}
+
+RUN set -xe; \
+  . ${NVM_DIR}/nvm.sh && \
+  nvm install ${NODE_VERSION} && \
+  nvm use ${NODE_VERSION} && \
+  npm install -g \
+    npm@latest \
+    typescript \
+    typescript-language-server
 
 # Powerline fonts
 RUN set -xe; \
