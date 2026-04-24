@@ -114,7 +114,7 @@ RUN set -xe; \
   mv PowerlineSymbols.otf ${HOME}/.local/share/fonts/ && \
   mv 10-powerline-symbols.conf ${HOME}/.config/fontconfig/conf.d/
 
-ARG UV_VERSION=0.11.3
+ARG UV_VERSION=0.11.7
 ENV UV_VERSION=${UV_VERSION}
 
 WORKDIR /home/python
